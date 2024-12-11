@@ -17,8 +17,10 @@ public class PlayerController : MonoBehaviour
 
     private float scale;  //向きの設定に利用する
 
-    private float limitPosX = 8.7f; //横方向の制限値
-    private float limitPosY = 4.0f; //縦方向の制限値
+    private float limitPosX = 9.0f; //横方向の制限値
+    private float limitPosY = 5.5f; //縦方向の制限値
+
+    private bool isGameOver = false;  // GameOver状態の判定用。true ならゲームオーバー。
 
     public bool isFirstGenerateBallon;  // 初めてバルーンを生成したかを判定するための変数(後程外部スクリプトでも利用するためpublicで宣言する)
 
@@ -139,6 +141,10 @@ public class PlayerController : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (isGameOver == true)
+        {
+            return;
+        }
         //移動
         Move();
     }
@@ -291,6 +297,18 @@ public class PlayerController : MonoBehaviour
             Destroy(col.gameObject);
         }
 
+    }
+
+    // ゲームオーバー
+    public void GameOver()
+    {
+        isGameOver = true;
+
+        // Console ビューに isGameOver 変数の値を表示する。ここが実行されると true と表示される
+        Debug.Log(isGameOver);
+
+        // 画面にゲームオーバー表示を行う
+        uiManager.DisplayGameOverInfo();
     }
 
 

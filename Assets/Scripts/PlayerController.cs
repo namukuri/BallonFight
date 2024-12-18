@@ -139,11 +139,11 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(transform.up * jumpPower); //キャラの位置を上方向に移動させる（ジャンプ・浮遊)
         anim.SetTrigger("Jump"); //jump(UP+Mid)アニメーションを再生する
     }
-    void FixedUpdate()
+    void FixedUpdate()  //一定間隔で呼び出されるメソッド
     {
-        if (isGameOver == true)
+        if (isGameOver == true) //ここでゲームオーバーの際の移動を制限する
         {
-            return;
+            return; //「ここで処理を終わらせる」という命令。
         }
         //移動
         Move();
@@ -300,7 +300,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // ゲームオーバー
-    public void GameOver()
+    public void GameOver() //GameOverZoneのGameOverを参照する
     {
         isGameOver = true;
 

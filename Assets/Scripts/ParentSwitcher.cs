@@ -23,7 +23,7 @@ public class ParentSwitcher : MonoBehaviour
 //このスクリプトがアタッチされているゲームオブジェクトのコライダーと、他のゲームオブジェクトのコライダーが離れた際に判定を行うメソッド
     private void OnCollisionExit2D(Collision2D col)
     {
-        if(col.gameObject.tag == player)
+        if(col.gameObject.tag == player && gameObject.activeInHierarchy) //新しく追加)
         {
 
         //接触状態で亡くなった（離れた）ゲームオブジェクト（キャラ）と、このスクリプトがアタッチされているゲームオブジェクト（床）の親子関係を解消する

@@ -359,6 +359,8 @@ RectTransform:
   m_Children:
   - {fileID: 814674417}
   - {fileID: 920259809}
+  - {fileID: 827976948}
+  - {fileID: 505188113}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -433,9 +435,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1385549284409674, guid: 486f42fcb063b4b4fa79b395c40825eb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1605467214}
-    - targetCorrespondingSourceObject: {fileID: 1385549284409674, guid: 486f42fcb063b4b4fa79b395c40825eb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1605467216}
   m_SourcePrefab: {fileID: 100100000, guid: 486f42fcb063b4b4fa79b395c40825eb, type: 3}
 --- !u!1 &437659672
 GameObject:
@@ -673,12 +672,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505188110}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.7, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -509.3, y: -298, z: 0}
   m_LocalScale: {x: 5.5, y: 4.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 304340864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -839,9 +838,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1385549284409674, guid: 486f42fcb063b4b4fa79b395c40825eb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 810826349}
-    - targetCorrespondingSourceObject: {fileID: 1385549284409674, guid: 486f42fcb063b4b4fa79b395c40825eb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 810826351}
   m_SourcePrefab: {fileID: 100100000, guid: 486f42fcb063b4b4fa79b395c40825eb, type: 3}
 --- !u!1 &609307229
 GameObject:
@@ -944,18 +940,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.6666667}
   m_EdgeRadius: 0
---- !u!114 &810826351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 810826347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5705cbe50f10dc44f8748c104f4aca7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &814674416
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,12 +1055,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 827976946}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -530, y: -298, z: 0}
   m_LocalScale: {x: 5.5, y: 4.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 304340864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &827976949
 MonoBehaviour:
@@ -1160,9 +1144,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1385549284409674, guid: 486f42fcb063b4b4fa79b395c40825eb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2046974590}
-    - targetCorrespondingSourceObject: {fileID: 1385549284409674, guid: 486f42fcb063b4b4fa79b395c40825eb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2046974592}
   m_SourcePrefab: {fileID: 100100000, guid: 486f42fcb063b4b4fa79b395c40825eb, type: 3}
 --- !u!1 &916842749
 GameObject:
@@ -1697,18 +1678,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.6666667}
   m_EdgeRadius: 0
---- !u!114 &1605467216
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605467212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5705cbe50f10dc44f8748c104f4aca7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1804194813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1947,6 +1916,8 @@ MonoBehaviour:
   TxtScore: {fileID: 916842750}
   txtInfo: {fileID: 1423801269}
   canvasGroupInfo: {fileID: 1295217395}
+  resultPopUpPrefab: {fileID: 2568595376979353996, guid: 42d8c406057d9a3448632e7c12dde2b3, type: 3}
+  canvasTran: {fileID: 304340864}
 --- !u!4 &2040732227
 Transform:
   m_ObjectHideFlags: 0
@@ -2017,18 +1988,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.6666667}
   m_EdgeRadius: 0
---- !u!114 &2046974592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2046974588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5705cbe50f10dc44f8748c104f4aca7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2101414300 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1385549284409674, guid: 486f42fcb063b4b4fa79b395c40825eb, type: 3}
@@ -2084,18 +2043,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.6666667}
   m_EdgeRadius: 0
---- !u!114 &2101414304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2101414300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5705cbe50f10dc44f8748c104f4aca7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2103883505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2163,9 +2110,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1385549284409674, guid: 486f42fcb063b4b4fa79b395c40825eb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2101414302}
-    - targetCorrespondingSourceObject: {fileID: 1385549284409674, guid: 486f42fcb063b4b4fa79b395c40825eb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2101414304}
   m_SourcePrefab: {fileID: 100100000, guid: 486f42fcb063b4b4fa79b395c40825eb, type: 3}
 --- !u!1 &3194399560934937900
 GameObject:
@@ -2262,8 +2206,6 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1229984892}
   - {fileID: 304340864}
-  - {fileID: 827976948}
-  - {fileID: 505188113}
   - {fileID: 1082213301}
   - {fileID: 1804194816}
   - {fileID: 1180796507}

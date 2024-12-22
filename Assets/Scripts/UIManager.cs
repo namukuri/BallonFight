@@ -15,6 +15,12 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private CanvasGroup canvasGroupInfo;
 
+    [SerializeField]
+    private ResultPopUp resultPopUpPrefab;
+
+    [SerializeField]
+    private Transform canvasTran;
+
     // スコア表示を更新
     public void UpdateDisplayScore(int score) //　<=　この引数でスコアの情報を受け取る
     {
@@ -30,5 +36,20 @@ public class UIManager : MonoBehaviour
 
         // 文字列をアニメーションさせて表示
         txtInfo.DOText("Game Over...", 1.0f);
+    }
+
+    /// <summary>
+    /// ResultPopUpの生成
+    /// </summary>
+    public void GenerateResultPobUp(int score)
+    {
+        // ResultPopUp を生成
+        ResultPopUp resultPopUp = Instantiate(resultPopUpPrefab, canvasTran, false);
+        //Instantiateの3番目の引数falseは、複製時にワールド座標を使うかどうかを指定します。
+        //falseの場合：オブジェクトは親オブジェクト（canvasTran）のローカル座標を使用します。
+        //trueの場合：オブジェクトはワールド座標をそのまま使用します。
+
+        // ResultPopUp の設定を行う
+        resultPopUp.SetUpResultPopUp(score);
     }
 }

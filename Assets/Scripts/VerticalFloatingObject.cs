@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class VerticalFloatingObject : MonoBehaviour
 {
     public float moveTime;
     public float moveRange;

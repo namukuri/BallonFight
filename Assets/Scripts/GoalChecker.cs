@@ -33,7 +33,7 @@ public class GoalChecker : MonoBehaviour
             PlayerController playerController = col.gameObject.GetComponent<PlayerController>();
 
             // PlayerControllerの持つ、UIManagerの変数を利用して、GenerateResultPopUpメソッドを呼び出す。引数にはPlayerControllerのcoinCountを渡す
-            playerController.uiManager.GenerateResultPobUp(playerController.coinPoint);
+            playerController.uiManager.GenerateResultPopUp(playerController.coinPoint);
         }
     }
 }

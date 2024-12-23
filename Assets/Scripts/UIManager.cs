@@ -25,6 +25,19 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Button btnInfo;
 
+    [SerializeField]
+    private Button btnTitle;
+
+    [SerializeField] 
+    private Text lblStart;
+
+    [SerializeField]
+    private CanvasGroup canvasGroupTitle;
+
+    private Tweener tweener;
+
+
+
     // スコア表示を更新
     public void UpdateDisplayScore(int score) //　<=　この引数でスコアの情報を受け取る
     {
@@ -47,7 +60,7 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// ResultPopUpの生成
     /// </summary>
-    public void GenerateResultPobUp(int score)
+    public void GenerateResultPopUp(int score)
     {
         // ResultPopUp を生成
         ResultPopUp resultPopUp = Instantiate(resultPopUpPrefab, canvasTran, false);
@@ -77,4 +90,67 @@ public class UIManager : MonoBehaviour
             });
             
     }
+
+    private void Start()
+    {
+        // タイトル表示
+        SwitchDisplayTitle(true, 1.0f);
+
+        // ボタンのOnClickイベントにメソッドを登録
+        btnTitle.onClick.AddListener(OnClickTitle);
+
+    }
+
+    // タイトル表示
+    public void SwitchDisplayTitle(bool isSwich, float alpha)
+    {
+        if (isSwich) canvasGroupTitle.alpha = 0;
+
+        canvasGroupTitle.DOFade(alpha, 1.0f).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            lblStart.gameObject.SetActive(isSwich);
+        });
+
+        if (tweener == null)
+        {
+            // Tap Startの文字をゆっくり点滅させる
+            tweener = lblStart.gameObject.GetComponent<CanvasGroup>().DOFade(0, 1.0f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
+
+        }
+        else
+        {
+            tweener.Kill();
+        }
+    }
+
+    // タイトル表示中に画面をクリックした際の処理
+    private void OnClickTitle() 
+    {
+        // ボタンのメソッドを削除して重複タップ防止
+        btnTitle.onClick.RemoveAllListeners();
+
+        // タイトルを徐々に非表示
+        SwitchDisplayTitle(false, 0.0f);
+
+        // タイトル表示が消えるのと入れ替わりで、ゲームスタートの文字を表示する
+        StartCoroutine(DisplayGameStartInfo());
+
+    }
+
+    // ゲームスタート表示
+    public IEnumerator DisplayGameStartInfo()
+    {
+        yield return new WaitForSeconds(0.5f); //0.5秒待つ
+
+        canvasGroupInfo.alpha = 0;
+        canvasGroupInfo.DOFade(1.0f, 0.5f);　//0.5秒かけて表示
+        txtInfo.text = "Game Start!";
+
+        yield return new WaitForSeconds(1.0f);　//1秒待つ
+        canvasGroupInfo.DOFade(0f, 0.5f);　//0.5秒かけて非表示
+
+        canvasGroupTitle.gameObject.SetActive(false);　//アクティブ状態をfalseにする
+
+    }
+
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class GameDirector : MonoBehaviour
@@ -12,6 +13,9 @@ public class GameDirector : MonoBehaviour
 
     [SerializeField]
     private FloorGenerator[] floorGenerators; // floorGenerator スクリプトのアタッチされているゲームオブジェクトをアサイン
+
+    [SerializeField]
+    private RandomObjectGenerator[] randomObjectGenerators;
 
     private bool isSetUp;  // ゲームの準備判定用。true になるとゲーム開始
 
@@ -54,6 +58,8 @@ public class GameDirector : MonoBehaviour
         // FloorGeneratorの準備
         SetUpFloorGenerators();
 
+        StopGenerators();
+
         // TODO 各ジェネレータを停止
         Debug.Log("生成停止");
     }
@@ -75,6 +81,10 @@ public class GameDirector : MonoBehaviour
 
             // 準備完了
             isSetUp = true;
+
+            // 各ジェネレータの生成をスタート
+            ActivateGenerators();
+
 
             // TODO 各ジェネレータを動かし始める
             Debug.Log("生成スタート");
@@ -98,7 +108,39 @@ public class GameDirector : MonoBehaviour
         // ゲーム終了
         isGameUp = true;
 
+        // 各ジェネレータの生成を停止
+        StopGenerators();
+
         // TODO 各ジェネレータを停止
         Debug.Log("生成停止");
     }
+
+
+    // 各ジェネレータを停止する
+    private void StopGenerators()
+    {
+        for (int i = 0; i < randomObjectGenerators.Length; i++)
+        {
+            randomObjectGenerators[i].SwitchActivation(false);
+        }
+
+        for (int i = 0; i < floorGenerators.Length; i++)
+        {
+            floorGenerators[i].SwitchActivation(false);
+        }
+    }
+        // 各ジェネレータを動かし始める
+        private void ActivateGenerators()
+    {
+        for (int i = 0; i < randomObjectGenerators.Length; i++)
+        {
+            randomObjectGenerators[i].SwitchActivation(true);
+        }
+
+        for(int i = 0; i < floorGenerators.Length; i++)
+        {
+            floorGenerators[i].SwitchActivation(true);                   
+        }
+    }
 }
+

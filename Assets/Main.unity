@@ -1527,7 +1527,7 @@ MonoBehaviour:
   - {fileID: 6604612134949562342, guid: f49a478285180c147bec86000e9f012f, type: 3}
   - {fileID: 8989135711150189107, guid: 918b092f02fbac3468372aa30fdf036e, type: 3}
   generateTran: {fileID: 262018241}
-  waitTimeRange: {x: 3, y: 7}
+  waitTimeRange: {x: 3, y: 5}
 --- !u!114 &1180796509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1544,6 +1544,8 @@ MonoBehaviour:
   playerController: {fileID: 1804194819}
   floorGenerators:
   - {fileID: 1180796506}
+  randomObjectGenerators:
+  - {fileID: 1180796508}
   clearCount: 2
 --- !u!1 &1229984889
 GameObject:

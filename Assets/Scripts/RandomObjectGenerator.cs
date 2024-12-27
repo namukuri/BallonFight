@@ -17,6 +17,10 @@ public class RandomObjectGenerator : MonoBehaviour
 
     private float timer; // 待機時間の計測用
 
+    private bool isActivate; // 生成の状態を設定し、生成を行うかどうかの判定に利用する。trueなら 生成し、false なら生成しない
+
+    private GameDirector gameDirector;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +39,11 @@ public class RandomObjectGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 停止中は生成を行わない
+        if (isActivate == false)
+        {
+            return;
+        }
         // 計測用タイマーを加算
         timer += Time.deltaTime;
 
@@ -66,6 +75,12 @@ public class RandomObjectGenerator : MonoBehaviour
 
         // 次の生成までの時間をセットする
         SetGenerateTime();
+    }
+
+    // 生成状態のオン/オフを切り替え
+    public void SwitchActivation(bool isSwitch)
+        {
+        isActivate = isSwitch;
     }
 }
 

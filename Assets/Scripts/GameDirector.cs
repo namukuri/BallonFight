@@ -17,9 +17,12 @@ public class GameDirector : MonoBehaviour
     [SerializeField]
     private RandomObjectGenerator[] randomObjectGenerators;
 
+    [SerializeField]
+    private AudioManager audioManager;  // ヒエラルキーにある AudioManager スクリプトのアタッチされているゲームオブジェクトをアサイン
+
     private bool isSetUp;  // ゲームの準備判定用。true になるとゲーム開始
 
-    private bool isGameUp;
+    private bool isGameUp; // ゲーム終了判定用。true になるとゲーム終了
 
     private int generateCount; // 空中床の生成回数
 
@@ -52,6 +55,9 @@ public class GameDirector : MonoBehaviour
 
     void Start()
     {
+
+        // タイトル曲再生
+        StartCoroutine(audioManager.PlayBGM(0));
         isGameUp = false;
         isSetUp = false;
 
@@ -84,6 +90,9 @@ public class GameDirector : MonoBehaviour
 
             // 各ジェネレータの生成をスタート
             ActivateGenerators();
+
+            // タイトル曲を終了し、メイン曲を再生
+            StartCoroutine(audioManager.PlayBGM(1));
 
 
             // TODO 各ジェネレータを動かし始める

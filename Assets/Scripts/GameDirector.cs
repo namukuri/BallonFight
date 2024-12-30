@@ -108,6 +108,9 @@ public class GameDirector : MonoBehaviour
 
         // TODO ゴール地点の初期設定
         Debug.Log("ゴール地点生成");
+
+        // ゴール地点の初期設定
+        goalHouse.SetUpGoalHouse(this);
     }
 
     // ゲーム終了
@@ -150,6 +153,14 @@ public class GameDirector : MonoBehaviour
         {
             floorGenerators[i].SwitchActivation(true);                   
         }
+    }
+
+    // ゴール到着
+    public void GoalClear()
+    {
+        // クリアの曲再生
+        StartCoroutine(audioManager.PlayBGM(2));
+        
     }
 }
 

@@ -54,6 +54,19 @@ public class PlayerController : MonoBehaviour
 
     public UIManager uiManager;
 
+    [SerializeField]
+    private AudioClip knockbackSE; // 敵と接触した際に鳴らすSE用のオーディオファイルをアサインする
+
+    [SerializeField]
+    private GameObject knockbackEffectPrefab; // 敵と接触した際に生成するエフェクト用のプレファブのゲームオブジェクトをアサインする
+
+    [SerializeField]
+    private AudioClip coinSE;
+
+    [SerializeField]
+    private GameObject coinEffectPrefab;
+
+
 
 
     // Start is called before the first frame update
@@ -258,9 +271,19 @@ public class PlayerController : MonoBehaviour
         // 接触したコライダーを持つゲームオブジェクトのTagがEnemyなら
         if (col.gameObject.tag == "Enemy")
         {
+            // キャラと敵の位置から距離と方向を計算
             Vector3 direction = (transform.position - col.transform.position).normalized;
             // キャラと敵の位置から距離と方向を計算
             transform.position += direction * knockbackPower;
+
+            // 敵との接触用のSE(AudioClip)を再生する
+            AudioSource.PlayClipAtPoint(knockbackSE, transform.position);
+
+            // 接触した際のエフェクトを、敵の位置に、クローンとして生成する。生成されたゲームオブジェクトを変数へ代入
+            GameObject knockbackEffect = Instantiate(knockbackEffectPrefab, col.transform.position, Quaternion.identity);
+
+            // エフェクトを 0.5 秒後に破棄。生成したタイミングで変数に代入しているので、削除の命令が出せる
+            Destroy(knockbackEffect, 0.5f);
         }
     }
 
@@ -292,6 +315,15 @@ public class PlayerController : MonoBehaviour
             coinPoint += col.gameObject.GetComponent<Coin>().point;
 
             uiManager.UpdateDisplayScore(coinPoint);
+
+            //coinとの接触用のSEを再生する
+            AudioSource.PlayClipAtPoint(coinSE, transform.position);
+
+            // 接触した際のエフェクトを、coinの位置に、クローンとして生成する。生成されたゲームオブジェクトを変数へ代入
+            GameObject coinEffect = Instantiate(coinEffectPrefab, col.transform.position, Quaternion.identity);
+
+            // エフェクトを 0.5 秒後に破棄。生成したタイミングで変数に代入しているので、削除の命令が出せる
+            Destroy(coinEffect, 0.5f);
 
             // 通過したコインのゲームオブジェクトを破壊する
             Destroy(col.gameObject);

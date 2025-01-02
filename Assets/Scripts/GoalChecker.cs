@@ -12,7 +12,10 @@ public class GoalChecker : MonoBehaviour
     private bool isGoal; // ゴールの重複判定防止用。一度ゴール判定したら true にして、ゴールの判定は１回だけしか行わないようにする
 
     private GameDirector gameDirector;
-        
+
+    [SerializeField]
+    private GameObject secretfloorObj; // 新しく作成した Ground_Set_Secret ゲームオブジェクトを操作するための変数
+
     void Update()
     {
         // 停止地点に到達するまで移動する
@@ -39,6 +42,12 @@ public class GoalChecker : MonoBehaviour
 
             // ゴール到着
             gameDirector.GoalClear();
+
+            // 落下防止の床を表示
+            secretfloorObj.SetActive(true);
+
+            // 落下防止の床を画面下からアニメさせて表示
+            secretfloorObj.transform.DOLocalMoveY(0.55f, 2.5f).SetEase(Ease.Linear).SetRelative();
         }
     }
 
@@ -47,5 +56,7 @@ public class GoalChecker : MonoBehaviour
     {
         this.gameDirector = gameDirector;
 
+        // 落下防止の床を非表示
+        secretfloorObj.SetActive(false);
     }
 }

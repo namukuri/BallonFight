@@ -34,7 +34,7 @@ public class Ballon : MonoBehaviour
             tweener?.Kill();
 
             // PlayerControllerのDestroyBallonメソッドを呼び出し、バルーンの破壊処理を行う
-            playerController.DestroyBallon();
+            playerController.DestroyBallon(this);
         }
 
     }

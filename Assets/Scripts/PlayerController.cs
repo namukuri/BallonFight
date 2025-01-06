@@ -36,13 +36,15 @@ public class PlayerController : MonoBehaviour
     
     public bool isGrounded;
 
-    public GameObject[] ballons;  // GameObject型の配列。インスペクターからヒエラルキーにある Ballon ゲームオブジェクトを２つアサインする
+    //public GameObject[] ballons;  // GameObject型の配列。インスペクターからヒエラルキーにある Ballon ゲームオブジェクトを２つアサインする
+    public List<Ballon>ballonList = new List<Ballon>(); // Ballon 型のリストを宣言して初期化する
 
     public int maxBallonCount; //バルーンを生成する最大数
 
     public Transform[] ballonTrans; //バルーンの生成位置の配列
 
-    public GameObject ballonPrefab; //バルーンのプレハブ
+    //public GameObject ballonPrefab; //バルーンのプレハブ
+    public Ballon ballonPrefab; // バルーンのプレファブ。GameObject 型ではなく、Ballon 型で宣言する
 
     public float generateTime; //バルーンを生成する時間
 
@@ -80,7 +82,7 @@ public class PlayerController : MonoBehaviour
         scale = transform.localScale.x; //追加分
 
         //配列の初期化（バルーンの最大生成数だけ配列の要素数を用意する）
-        ballons = new GameObject[maxBallonCount];
+        //ballons = new GameObject[maxBallonCount];
 
         //Walk(); 
     }
@@ -93,8 +95,8 @@ public class PlayerController : MonoBehaviour
         //SceneビューにPhysics2D.LinecastメソッドのLineを表示する
         //Debug.DrawLine(transform.position + transform.up * 0.4f, transform.position - transform.up * 0.9f, Color.red, 1.0f);
 
-        //ballons変数の最初の要素の値が空でないなら　＝　バルーンが１つ生成されるとこの要素に値が代入される　＝　バルーンが１つあるなら
-        if (ballons[0]  != null ) 
+        // ballonList 変数の最大値が 1 以上なら = バルーンが１つ以上あるなら
+        if (ballonList.Count > 0) 
         {
 
         //Ballons配列変数の最大要素数が 0 以上なら = インスペクターでBallons変数に情報が登録されているなら
@@ -128,14 +130,14 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 5.0f);
         }
 
-        //地面に接地していて、ばるーが生成中ではない場合
-        if (isGrounded == true && isGenerating == false)
+        // 地面に接地していて、バルーンが生成中ではなく、かつ、バルーンが２個以下の場合
+        if (isGrounded == true && isGenerating == false && ballonList.Count < maxBallonCount)
         {
             //Qボタンを押したら
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 //バルーンを一つ作成する
-                StartCoroutine(GenerateBallon());
+                StartCoroutine(GenerateBallon(1, generateTime)); //引数を追加
             }
         }
     }
@@ -216,10 +218,10 @@ public class PlayerController : MonoBehaviour
 
     //バルーン作成
 
-    private IEnumerator GenerateBallon()
+    private IEnumerator GenerateBallon(int ballonCount, float waitTime)
     {
         //全ての配列の要素にバルーンが存在している場合には、バルーンを生成しない
-        if (ballons[1] != null)
+        if (ballonList.Count >= maxBallonCount)
         {
             yield break;
         }
@@ -240,24 +242,57 @@ public class PlayerController : MonoBehaviour
         }
 
 
-            //１つめの配列の要素が空なら
-            if (ballons[0] == null)
-            {
-                //１つめのバルーンを生成して、１番目の配列へ代入
-                ballons[0] = Instantiate(ballonPrefab, ballonTrans[0]);
+        //１つめの配列の要素が空なら
+        //if (ballons[0] == null)
+        //{
+        //１つめのバルーンを生成して、１番目の配列へ代入
+        //ballons[0] = Instantiate(ballonPrefab, ballonTrans[0]);
 
-                ballons[0].GetComponent<Ballon>().SetUpBallon(this);
+        //ballons[0].GetComponent<Ballon>().SetUpBallon(this);
+        //}
+        //else
+        //{
+        //２つ目のバルーンを生成して、２番目の配列へ代入
+        //ballons[1] = Instantiate(ballonPrefab, ballonTrans[1]);
+
+        //ballons[1].GetComponent<Ballon>().SetUpBallon(this);
+        //}
+        // バルーンの数を増やす
+        //ballonCount++;
+
+        //生成時間分待機
+        //yield return new WaitForSeconds(generateTime);
+
+        // ここから List 用の処理を追加
+
+        // 引数で指定された数だけバルーンを生成
+        for (int i = 0; i < ballonCount; i++)
+        {
+            // 生成されたバルーンのクローン(Ballon 型)を代入するための変数を宣言
+            Ballon ballon;
+
+            // 1つ目のバルーンの生成位置にバルーンがない場合
+            if (ballonTrans[0].childCount == 0)
+            {
+                // 1つ目のバルーンの生成位置にバルーン生成
+                ballon = Instantiate(ballonPrefab, ballonTrans[0]);
             }
+            // 1つ目のバルーンの生成位置にバルーンがある場合
             else
             {
-                //２つ目のバルーンを生成して、２番目の配列へ代入
-                ballons[1] = Instantiate(ballonPrefab, ballonTrans[1]);
-
-                ballons[1].GetComponent<Ballon>().SetUpBallon(this);
+                // 2つ目のバルーンの生成位置にバルーン生成
+                ballon = Instantiate(ballonPrefab, ballonTrans[1]);
             }
 
-            //生成時間分待機
-            yield return new WaitForSeconds(generateTime);
+            // バルーンの設定(Ballon 型で生成して変数に代入しているので、GetComponent メソッドを行うことなく、すぐにメソッドの呼び出し命令を実行できる)
+            ballon.SetUpBallon(this);
+
+            // List に追加
+            ballonList.Add(ballon);
+
+            // バルーン生成時間分だけ待機
+            yield return new WaitForSeconds(waitTime);
+        }
 
 
             //生成中状態終了。再度生成できるようにする
@@ -292,18 +327,24 @@ public class PlayerController : MonoBehaviour
 
     /// バルーン破壊
 
-    public void DestroyBallon()
+    public void DestroyBallon(Ballon ballon)
     {
+        // List から削除
+        ballonList.Remove(ballon);
+        Destroy(ballon.gameObject);
         // TODO 後程、バルーンが破壊される際に「割れた」ように見えるアニメ演出を追加する
 
-        if (ballons[1] != null)
-        {
-            Destroy(ballons[1]);
-        }
-        else if (ballons[0] != null)
-        {
-            Destroy(ballons[0]);
-        }
+        //if (ballons[1] != null)
+        //{
+        //  Destroy(ballons[1]);
+        //}
+        //else if (ballons[0] != null)
+        //{
+        //  Destroy(ballons[0]);
+        //}
+        // バルーンの数を減らす
+        //ballonCount--;
+
     }
 
     // IsTriggerがオンのコライダーを持つゲームオブジェクトを通過した場合に呼び出されるメソッド
@@ -342,6 +383,4 @@ public class PlayerController : MonoBehaviour
         // 画面にゲームオーバー表示を行う
         uiManager.DisplayGameOverInfo();
     }
-
-
 }

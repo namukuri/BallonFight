@@ -2732,21 +2732,19 @@ MonoBehaviour:
     m_Bits: 256
   startChecker: {fileID: 1082213303}
   isGrounded: 0
-  ballons:
-  - {fileID: 3194399560934937900}
-  - {fileID: 301933535}
+  ballonList: []
   maxBallonCount: 2
   ballonTrans:
   - {fileID: 4852850558375799860}
   - {fileID: 301933536}
-  ballonPrefab: {fileID: 7833642463003848950, guid: 25750e21b4892064aa3214aa39905b05, type: 3}
-  generateTime: 0
+  ballonPrefab: {fileID: 4238795064220326868, guid: 25750e21b4892064aa3214aa39905b05, type: 3}
+  generateTime: 2
   isGenerating: 0
   knockbackPower: 2
   coinPoint: 0
   uiManager: {fileID: 2040732228}
   knockbackSE: {fileID: 8300000, guid: a11d77af3c0be4eb684a4cf9f47ea146, type: 3}
-  knockbackEffectPrefab: {fileID: 1141330259687333427, guid: 6718dc24203da53468af9ada8fef7d6d, type: 3}
+  knockbackEffectPrefab: {fileID: 9027514048236820045, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
   coinSE: {fileID: 8300000, guid: 71ccb8d2b0fe9404f8cc4f59bfaafab6, type: 3}
   coinEffectPrefab: {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd, type: 3}
 --- !u!1 &2040732225

@@ -52,9 +52,9 @@ public class GoalChecker : MonoBehaviour
     }
 
     // ゴール地点の初期設定
-    public void SetUpGoalHouse(GameDirector gameDirector)
+    public void SetUpGoalHouse(GameDirector director)
     {
-        this.gameDirector = gameDirector;
+        gameDirector = director;
 
         // 落下防止の床を非表示
         secretfloorObj.SetActive(false);

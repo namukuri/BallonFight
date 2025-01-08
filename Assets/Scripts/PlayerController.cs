@@ -33,11 +33,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private StartChecker startChecker;
-    
+
     public bool isGrounded;
 
     //public GameObject[] ballons;  // GameObject型の配列。インスペクターからヒエラルキーにある Ballon ゲームオブジェクトを２つアサインする
-    public List<Ballon>ballonList = new List<Ballon>(); // Ballon 型のリストを宣言して初期化する
+    public List<Ballon> ballonList = new List<Ballon>(); // Ballon 型のリストを宣言して初期化する
 
     public int maxBallonCount; //バルーンを生成する最大数
 
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         //必要なコンポーネントを取得して用意した変数に代入
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        
+
         scale = transform.localScale.x; //追加分
 
         //配列の初期化（バルーンの最大生成数だけ配列の要素数を用意する）
@@ -96,19 +96,26 @@ public class PlayerController : MonoBehaviour
         //Debug.DrawLine(transform.position + transform.up * 0.4f, transform.position - transform.up * 0.9f, Color.red, 1.0f);
 
         // ballonList 変数の最大値が 1 以上なら = バルーンが１つ以上あるなら
-        if (ballonList.Count > 0) 
+        if (ballonList.Count > 0)
         {
 
-        //Ballons配列変数の最大要素数が 0 以上なら = インスペクターでBallons変数に情報が登録されているなら
-        //if (ballons.Length > 0)
-        //{
+            //Ballons配列変数の最大要素数が 0 以上なら = インスペクターでBallons変数に情報が登録されているなら
+            //if (ballons.Length > 0)
+            //{
 
             //ジャンプ
             if (Input.GetButtonDown(jump)) //InputManagerのJumpの項目に登録されているキー入力を判定する
             {
                 Jump();
                 //Walk();
-                //Walk();
+
+            }
+
+            // 空中にいる間にRボタンを押すと
+            if (Input.GetKeyDown(KeyCode.R) && isGrounded == false)
+            {
+                // すべてのバルーンを切り離す(地面や床にいる間は不可)
+                DetachBallons();
             }
 
             //接地していない（空中にいる）間で、落下中の場合
@@ -124,7 +131,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Velocity.yの値が5.0fを超える場合(ジャンプを連続で押した場合）
-        if(rb.velocity.y > 5.0f)
+        if (rb.velocity.y > 5.0f)
         {
             //Velocity.yの値に制限をかける（落下せずに上空で待機できてしまう現象を防ぐため）
             rb.velocity = new Vector2(rb.velocity.x, 5.0f);
@@ -146,7 +153,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Walk");
         Debug.Log("scale/ " + scale);
-    
+
     }
 
     private void Jump()
@@ -165,7 +172,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Move()
     {
-         //水平（横）方向への入力受付
+        //水平（横）方向への入力受付
         float x = Input.GetAxis(horizontal); //InputManagerのHorizontalに登録されているキーの入力があるかどうか確認を行う
 
         //xの値が０でない場合＝キー入力がある場合
@@ -205,7 +212,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(0, rb.velocity.y);
             //走るアニメ再生を止めて、待機状態のアニメの再生への遷移を行う
             anim.SetFloat("Run", 0.0f);
-            anim.SetBool("Idle", true); 
+            anim.SetBool("Idle", true);
         }
 
         //現在の位置情報が移動範囲の制限範囲を超えていないか確認する。超えていたら制限範囲内に収める
@@ -213,7 +220,7 @@ public class PlayerController : MonoBehaviour
         float posY = Mathf.Clamp(transform.position.y, -limitPosY, limitPosY);
 
         //現在の位置情報が移動範囲の制限範囲を超えていないか確認する。超えていたら、制限範囲に収める
-        transform.position = new Vector2(posX, posY);        
+        transform.position = new Vector2(posX, posY);
     }
 
     //バルーン作成
@@ -295,11 +302,11 @@ public class PlayerController : MonoBehaviour
         }
 
 
-            //生成中状態終了。再度生成できるようにする
-            isGenerating = false;
-        }   
-          
-    
+        //生成中状態終了。再度生成できるようにする
+        isGenerating = false;
+    }
+
+
 
     private void OnCollisionEnter2D(Collision2D col)
     {
@@ -349,8 +356,8 @@ public class PlayerController : MonoBehaviour
 
     // IsTriggerがオンのコライダーを持つゲームオブジェクトを通過した場合に呼び出されるメソッド
     private void OnTriggerEnter2D(Collider2D col)
-    {      
-       if(col.gameObject.tag == "Coin")
+    {
+        if (col.gameObject.tag == "Coin")
         {
             // 通過したコインのゲームオブジェクトの持つ Coin スクリプトを取得し、point 変数の値をキャラの持つ coinPoint 変数に加算
             coinPoint += col.gameObject.GetComponent<Coin>().point;
@@ -382,5 +389,20 @@ public class PlayerController : MonoBehaviour
 
         // 画面にゲームオーバー表示を行う
         uiManager.DisplayGameOverInfo();
+    }
+
+    //すべてのバルーンを切り離す
+    private void DetachBallons()
+    {
+
+        // 現在のバルーンを１つずつ順番に処理する
+        for (int i = 0; i < ballonList.Count; i++)
+        {
+            // バルーンを切り離し、上空へ浮遊させる
+            ballonList[i].FloatingBallon();
+        }
+
+        // バルーンのリストをクリアし、再度、バルーンを生成できるようにする
+        ballonList.Clear();
     }
 }

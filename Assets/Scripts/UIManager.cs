@@ -36,7 +36,8 @@ public class UIManager : MonoBehaviour
 
     private Tweener tweener;
 
-
+    [Header("タイトル画面でクリックされたかどうか判定")]
+    public bool isTitleClicked = false; // true になったらタイトル画面でクリックされたと判断する
 
     // スコア表示を更新
     public void UpdateDisplayScore(int score) //　<=　この引数でスコアの情報を受け取る
@@ -134,6 +135,8 @@ public class UIManager : MonoBehaviour
 
         // タイトル表示が消えるのと入れ替わりで、ゲームスタートの文字を表示する
         StartCoroutine(DisplayGameStartInfo());
+
+        isTitleClicked = true; // =>  ☆　ここで true に切り替わることで、TitleObjectController の処理が動き始める
 
     }
 
